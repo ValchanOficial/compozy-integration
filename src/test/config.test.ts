@@ -212,12 +212,12 @@ describe("Project Configuration", () => {
     });
 
     it("should have difficulty speed mapping", () => {
-      const configPath = path.join(rootDir, "src", "game", "config.ts");
-      const configContent = fs.readFileSync(configPath, "utf-8");
-      expect(configContent).toContain("DIFFICULTY_SPEED");
-      expect(configContent).toContain("easy");
-      expect(configContent).toContain("medium");
-      expect(configContent).toContain("hard");
+      const constantsPath = path.join(rootDir, "src", "game", "constants.ts");
+      const constantsContent = fs.readFileSync(constantsPath, "utf-8");
+      expect(constantsContent).toContain("DIFFICULTY_SPEED");
+      expect(constantsContent).toContain("easy");
+      expect(constantsContent).toContain("medium");
+      expect(constantsContent).toContain("hard");
     });
   });
 

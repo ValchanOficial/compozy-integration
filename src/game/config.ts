@@ -1,4 +1,8 @@
 import Phaser from "phaser";
+import { GRID, DIFFICULTY_SPEED, CANVAS } from "./constants";
+
+// Re-export constants for convenience
+export { GRID, DIFFICULTY_SPEED, CANVAS };
 
 /**
  * Phaser game configuration.
@@ -6,8 +10,8 @@ import Phaser from "phaser";
  */
 export const GAME_CONFIG: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: CANVAS.WIDTH,
+  height: CANVAS.HEIGHT,
   backgroundColor: "#1a1a2e",
   parent: "game-container",
   physics: {
@@ -21,23 +25,4 @@ export const GAME_CONFIG: Phaser.Types.Core.GameConfig = {
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
   scene: [], // Scenes will be added during game initialization
-};
-
-/**
- * Difficulty speed mapping (in milliseconds).
- * Lower values mean faster snake movement.
- */
-export const DIFFICULTY_SPEED: Record<string, number> = {
-  easy: 150,
-  medium: 100,
-  hard: 60,
-};
-
-/**
- * Grid constants for the snake game.
- */
-export const GRID = {
-  CELL_SIZE: 20,
-  WIDTH: 40, // 800 / 20
-  HEIGHT: 30, // 600 / 20
 };
