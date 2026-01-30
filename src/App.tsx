@@ -1,4 +1,5 @@
 import "./App.css";
+import { GameCanvas } from "@/components/GameCanvas";
 
 function App() {
   return (
@@ -8,9 +9,7 @@ function App() {
         <p>A modern Snake game built with React and Phaser</p>
       </header>
       <main className="app-main">
-        <div id="game-container" className="game-container">
-          {/* Phaser game will be mounted here */}
-        </div>
+        <GameCanvas containerId="game-container" />
       </main>
     </div>
   );
