@@ -1,20 +1,20 @@
-import Phaser from "phaser";
-import { Snake } from "@/game/entities/Snake";
+import { DIFFICULTY_SPEED, GRID } from "@/game/config";
 import { Food } from "@/game/entities/Food";
-import { GRID, DIFFICULTY_SPEED } from "@/game/config";
-import { Direction, CollisionType } from "@/types/game";
+import { Snake } from "@/game/entities/Snake";
 import {
-  getGameState,
-  resetGameState,
-  incrementScore,
-} from "@/stores/gameStore";
-import {
-  playSoundEffect,
   initializeAudio,
+  playSoundEffect,
   startBackgroundMusic,
   stopBackgroundMusic,
 } from "@/services/audioService";
-import { SwipeDirection } from "@/types";
+import {
+  getGameState,
+  incrementScore,
+  resetGameState,
+} from "@/stores/gameStore";
+import { type SwipeDirection } from "@/types";
+import { type CollisionType, type Direction } from "@/types/game";
+import Phaser from "phaser";
 
 /**
  * Main gameplay scene handling snake movement, food collection, and collisions.

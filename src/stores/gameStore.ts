@@ -1,12 +1,12 @@
-import { create } from "zustand";
-import { Difficulty, GameStatus, AudioSettings } from "@/types";
-import { getHighScoreValue, saveGuestScore } from "@/services/localStorage";
 import {
-  loadAudioSettings,
-  saveAudioSettings as persistAudioSettings,
   applyAudioSettings,
   getDefaultAudioSettings,
+  loadAudioSettings,
+  saveAudioSettings as persistAudioSettings,
 } from "@/services/audioService";
+import { getHighScoreValue, saveGuestScore } from "@/services/localStorage";
+import { type AudioSettings, type Difficulty, type GameStatus } from "@/types";
+import { create } from "zustand";
 
 /**
  * Extended GameState interface with audio settings.

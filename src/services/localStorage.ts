@@ -1,4 +1,4 @@
-import { Difficulty, GuestScore, GuestScoreData } from "@/types";
+import { type Difficulty, type GuestScore, type GuestScoreData } from "@/types";
 
 /**
  * LocalStorage keys for guest score persistence.

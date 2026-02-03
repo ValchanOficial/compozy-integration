@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
-import { ScreenBreakpoint, SwipeDirection } from "@/types";
+import { type ScreenBreakpoint, type SwipeDirection } from "@/types";
+import { useCallback, useEffect, useState } from "react";
 
 /**
  * Breakpoint thresholds in pixels.
@@ -295,4 +295,4 @@ export function calculateCanvasDimensions(
   };
 }
 
-export { BREAKPOINTS, MIN_SWIPE_DISTANCE, MAX_SWIPE_TIME };
+export { BREAKPOINTS, MAX_SWIPE_TIME, MIN_SWIPE_DISTANCE };

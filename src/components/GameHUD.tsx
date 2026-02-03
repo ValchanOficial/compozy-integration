@@ -1,5 +1,5 @@
 import { useGameStore } from "@/stores/gameStore";
-import { Difficulty } from "@/types";
+import { type Difficulty } from "@/types";
 import "./GameHUD.css";
 
 /**

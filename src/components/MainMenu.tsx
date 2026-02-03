@@ -1,7 +1,7 @@
-import { useGameStore } from "@/stores/gameStore";
-import { Difficulty } from "@/types";
-import { AudioControls } from "./AudioControls";
 import { useResponsive } from "@/hooks/useResponsive";
+import { useGameStore } from "@/stores/gameStore";
+import { type Difficulty } from "@/types";
+import { AudioControls } from "./AudioControls";
 import "./MainMenu.css";
 
 /**

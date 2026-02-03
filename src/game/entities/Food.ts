@@ -1,5 +1,5 @@
-import { Position } from "@/types/game";
 import { GRID } from "@/game/constants";
+import { type Position } from "@/types/game";
 
 /**
  * Food entity representing the collectible item for the snake.

@@ -1,9 +1,9 @@
-import { useEffect, useRef, useCallback, useState } from "react";
-import Phaser from "phaser";
 import { GAME_CONFIG } from "@/game/config";
 import { GameScene } from "@/game/scenes/GameScene";
 import { useSwipeDetection } from "@/hooks/useResponsive";
-import { SwipeDirection } from "@/types";
+import { type SwipeDirection } from "@/types";
+import Phaser from "phaser";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./GameCanvas.css";
 
 /**

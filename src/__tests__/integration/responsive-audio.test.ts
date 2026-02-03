@@ -1,27 +1,27 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import {
-  loadAudioSettings,
-  saveAudioSettings,
-  clearAudioSettings,
-  initializeAudio,
+  calculateCanvasDimensions,
+  useResponsive,
+  useSwipeDetection,
+} from "@/hooks/useResponsive";
+import {
   applyAudioSettings,
+  cleanupAudio,
+  clearAudioSettings,
+  getDefaultAudioSettings,
+  initializeAudio,
+  isAudioInitialized,
+  loadAudioSettings,
+  playSoundEffect,
+  saveAudioSettings,
   setEffectsVolume,
   setMusicVolume,
   setMuted,
-  playSoundEffect,
   startBackgroundMusic,
   stopBackgroundMusic,
-  cleanupAudio,
-  getDefaultAudioSettings,
-  isAudioInitialized,
 } from "@/services/audioService";
-import {
-  useResponsive,
-  useSwipeDetection,
-  calculateCanvasDimensions,
-} from "@/hooks/useResponsive";
-import { renderHook, act } from "@testing-library/react";
-import { AudioSettings } from "@/types";
+import { type AudioSettings } from "@/types";
+import { act, renderHook } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock localStorage
 const createLocalStorageMock = () => {

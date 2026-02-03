@@ -1,4 +1,4 @@
-import { AudioSettings } from "@/types";
+import { type AudioSettings } from "@/types";
 
 /**
  * LocalStorage key for audio settings persistence.

@@ -1,23 +1,23 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { type AudioSettings } from "@/types";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
-  loadAudioSettings,
-  saveAudioSettings,
-  clearAudioSettings,
-  initializeAudio,
   applyAudioSettings,
+  cleanupAudio,
+  clearAudioSettings,
+  getAudioContextState,
+  getDefaultAudioSettings,
+  initializeAudio,
+  isAudioInitialized,
+  loadAudioSettings,
+  playSoundEffect,
+  resumeAudioContext,
+  saveAudioSettings,
   setEffectsVolume,
   setMusicVolume,
   setMuted,
-  playSoundEffect,
   startBackgroundMusic,
   stopBackgroundMusic,
-  isAudioInitialized,
-  getAudioContextState,
-  resumeAudioContext,
-  cleanupAudio,
-  getDefaultAudioSettings,
 } from "./audioService";
-import { AudioSettings } from "@/types";
 
 // Mock localStorage
 const createLocalStorageMock = () => {

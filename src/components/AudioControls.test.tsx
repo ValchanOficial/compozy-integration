@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
-import { AudioControls } from "./AudioControls";
 import { useGameStore } from "@/stores/gameStore";
-import { AudioSettings } from "@/types";
+import { type AudioSettings } from "@/types";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { AudioControls } from "./AudioControls";
 
 // Mock the game store
 vi.mock("@/stores/gameStore", () => ({

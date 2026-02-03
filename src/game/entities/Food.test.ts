@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { type Position } from "@/types/game";
+import { beforeEach, describe, expect, it } from "vitest";
 import { Food } from "./Food";
-import { Position } from "@/types/game";
 
 describe("Food", () => {
   let food: Food;

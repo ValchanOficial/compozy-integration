@@ -1,10 +1,10 @@
-import {
-  Position,
-  Direction,
-  OPPOSITE_DIRECTION,
-  DIRECTION_VECTORS,
-} from "@/types/game";
 import { GRID } from "@/game/constants";
+import {
+  type Direction,
+  DIRECTION_VECTORS,
+  OPPOSITE_DIRECTION,
+  type Position,
+} from "@/types/game";
 
 /**
  * Snake entity representing the player-controlled snake.

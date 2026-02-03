@@ -1,14 +1,14 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { Snake } from "@/game/entities/Snake";
+import { DIFFICULTY_SPEED, GRID } from "@/game/constants";
 import { Food } from "@/game/entities/Food";
-import { GRID, DIFFICULTY_SPEED } from "@/game/constants";
+import { Snake } from "@/game/entities/Snake";
 import {
-  useGameStore,
   getGameState,
-  resetGameState,
   incrementScore,
+  resetGameState,
+  useGameStore,
 } from "@/stores/gameStore";
-import { CollisionType } from "@/types/game";
+import { type CollisionType } from "@/types/game";
+import { beforeEach, describe, expect, it } from "vitest";
 
 /**
  * Integration tests for GameScene logic.
