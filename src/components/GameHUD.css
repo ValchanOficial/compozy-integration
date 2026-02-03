@@ -1,0 +1,87 @@
+.game-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 800px;
+  padding: 12px 16px;
+  background-color: #1a1a2e;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hud-left,
+.hud-right {
+  display: flex;
+  gap: 24px;
+}
+
+.hud-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-label {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.hud-value {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.game-status {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 4px 16px;
+  border-radius: 4px;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.game-status.paused {
+  color: #facc15;
+  background-color: rgba(250, 204, 21, 0.1);
+}
+
+.game-status.gameover {
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.difficulty-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.difficulty-indicator.difficulty-easy .hud-value {
+  color: #4ade80;
+}
+
+.difficulty-indicator.difficulty-medium .hud-value {
+  color: #facc15;
+}
+
+.difficulty-indicator.difficulty-hard .hud-value {
+  color: #ef4444;
+}

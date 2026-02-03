@@ -29,11 +29,16 @@
   flex: 1;
 }
 
+.game-area {
+  display: flex;
+  flex-direction: column;
+}
+
 .game-container {
   width: 800px;
   height: 600px;
   background-color: #1a1a2e;
-  border-radius: 8px;
+  border-radius: 0 0 8px 8px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
