@@ -4,10 +4,16 @@ import {
   getGameState,
   resetGameState,
   incrementScore,
+  loadHighScoreFromStorage,
+  saveScoreToStorage,
+  initializeGameStore,
 } from "./gameStore";
+import { saveGuestScore, clearGuestScores } from "@/services/localStorage";
 
 describe("gameStore", () => {
   beforeEach(() => {
+    // Clear localStorage before each test
+    clearGuestScores();
     // Reset store to initial state before each test
     useGameStore.setState({
       score: 0,
@@ -188,6 +194,105 @@ describe("gameStore", () => {
 
       state.setScore(3);
       expect(getGameState().score).toBe(3);
+    });
+  });
+
+  describe("loadHighScoreFromStorage", () => {
+    it("loads high score from localStorage for current difficulty", () => {
+      // Save a score to localStorage
+      saveGuestScore(150, "medium");
+
+      // Load it into the store
+      loadHighScoreFromStorage();
+
+      expect(getGameState().highScore).toBe(150);
+    });
+
+    it("does not lower high score if store value is higher", () => {
+      const state = getGameState();
+      state.setHighScore(200);
+
+      // Save lower score to localStorage
+      saveGuestScore(100, "medium");
+
+      // Try to load - should not lower the high score
+      loadHighScoreFromStorage();
+
+      expect(getGameState().highScore).toBe(200);
+    });
+
+    it("loads correct score based on current difficulty", () => {
+      saveGuestScore(100, "easy");
+      saveGuestScore(200, "medium");
+      saveGuestScore(300, "hard");
+
+      // Default difficulty is medium
+      loadHighScoreFromStorage();
+      expect(getGameState().highScore).toBe(200);
+
+      // Change to hard and reload
+      const state = getGameState();
+      state.setDifficulty("hard");
+      useGameStore.setState({ highScore: 0 });
+      loadHighScoreFromStorage();
+      expect(getGameState().highScore).toBe(300);
+    });
+  });
+
+  describe("saveScoreToStorage", () => {
+    it("saves current score to localStorage", () => {
+      const state = getGameState();
+      state.setScore(250);
+
+      const result = saveScoreToStorage();
+
+      expect(result).toBe(true);
+    });
+
+    it("returns false when score is lower than existing", () => {
+      saveGuestScore(200, "medium");
+
+      const state = getGameState();
+      state.setScore(100);
+
+      const result = saveScoreToStorage();
+
+      expect(result).toBe(false);
+    });
+
+    it("saves score for current difficulty", () => {
+      const state = getGameState();
+      state.setDifficulty("hard");
+      state.setScore(500);
+
+      saveScoreToStorage();
+
+      // Change difficulty and verify scores are separate
+      state.setDifficulty("easy");
+      state.setScore(100);
+      saveScoreToStorage();
+
+      // Check both were saved correctly
+      state.setDifficulty("hard");
+      useGameStore.setState({ highScore: 0 });
+      loadHighScoreFromStorage();
+      expect(getGameState().highScore).toBe(500);
+
+      state.setDifficulty("easy");
+      useGameStore.setState({ highScore: 0 });
+      loadHighScoreFromStorage();
+      expect(getGameState().highScore).toBe(100);
+    });
+  });
+
+  describe("initializeGameStore", () => {
+    it("loads high score from storage on initialization", () => {
+      saveGuestScore(300, "medium");
+      useGameStore.setState({ highScore: 0 });
+
+      initializeGameStore();
+
+      expect(getGameState().highScore).toBe(300);
     });
   });
 });

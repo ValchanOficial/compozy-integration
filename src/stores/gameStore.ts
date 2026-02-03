@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Difficulty, GameStatus, GameState } from "@/types";
+import { getHighScoreValue, saveGuestScore } from "@/services/localStorage";
 
 /**
  * Zustand store for game state management.
@@ -55,4 +56,34 @@ export const resetGameState = (): void => {
 export const incrementScore = (value: number = 10): void => {
   const state = useGameStore.getState();
   state.setScore(state.score + value);
+};
+
+/**
+ * Load high score from LocalStorage for the current difficulty.
+ * Called when the game starts or difficulty changes.
+ */
+export const loadHighScoreFromStorage = (): void => {
+  const state = useGameStore.getState();
+  const storedHighScore = getHighScoreValue(state.difficulty);
+  if (storedHighScore > state.highScore) {
+    state.setHighScore(storedHighScore);
+  }
+};
+
+/**
+ * Save the current score to LocalStorage if it's a new high score.
+ * Called when the game ends.
+ * @returns true if the score was saved (new high score), false otherwise
+ */
+export const saveScoreToStorage = (): boolean => {
+  const state = useGameStore.getState();
+  return saveGuestScore(state.score, state.difficulty);
+};
+
+/**
+ * Initialize game state with high score from LocalStorage.
+ * Called on app startup.
+ */
+export const initializeGameStore = (): void => {
+  loadHighScoreFromStorage();
 };

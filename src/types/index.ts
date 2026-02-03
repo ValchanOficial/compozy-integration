@@ -25,3 +25,28 @@ export interface LeaderboardEntry {
   difficulty: string;
   created_at: string;
 }
+
+/**
+ * Guest score data stored in LocalStorage.
+ * Contains the score value, difficulty level, and timestamp.
+ */
+export interface GuestScore {
+  /** The score value achieved */
+  score: number;
+  /** Difficulty level when score was achieved */
+  difficulty: Difficulty;
+  /** Timestamp when the score was saved (ISO 8601 format) */
+  timestamp: string;
+}
+
+/**
+ * All guest scores stored in LocalStorage, organized by difficulty.
+ */
+export interface GuestScoreData {
+  /** High score for easy difficulty */
+  easy: GuestScore | null;
+  /** High score for medium difficulty */
+  medium: GuestScore | null;
+  /** High score for hard difficulty */
+  hard: GuestScore | null;
+}
