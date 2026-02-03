@@ -50,3 +50,25 @@ export interface GuestScoreData {
   /** High score for hard difficulty */
   hard: GuestScore | null;
 }
+
+/**
+ * Audio settings stored in LocalStorage.
+ */
+export interface AudioSettings {
+  /** Sound effects volume (0-1) */
+  effectsVolume: number;
+  /** Background music volume (0-1) */
+  musicVolume: number;
+  /** Whether all audio is muted */
+  isMuted: boolean;
+}
+
+/**
+ * Screen breakpoint identifiers for responsive design.
+ */
+export type ScreenBreakpoint = "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+
+/**
+ * Swipe direction for touch controls.
+ */
+export type SwipeDirection = "up" | "down" | "left" | "right" | null;

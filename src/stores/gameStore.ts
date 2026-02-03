@@ -1,6 +1,32 @@
 import { create } from "zustand";
-import { Difficulty, GameStatus, GameState } from "@/types";
+import { Difficulty, GameStatus, AudioSettings } from "@/types";
 import { getHighScoreValue, saveGuestScore } from "@/services/localStorage";
+import {
+  loadAudioSettings,
+  saveAudioSettings as persistAudioSettings,
+  applyAudioSettings,
+  getDefaultAudioSettings,
+} from "@/services/audioService";
+
+/**
+ * Extended GameState interface with audio settings.
+ */
+export interface GameState {
+  score: number;
+  highScore: number;
+  difficulty: Difficulty;
+  gameStatus: GameStatus;
+  audioSettings: AudioSettings;
+  setScore: (score: number) => void;
+  setHighScore: (highScore: number) => void;
+  setDifficulty: (difficulty: Difficulty) => void;
+  setGameStatus: (status: GameStatus) => void;
+  setEffectsVolume: (volume: number) => void;
+  setMusicVolume: (volume: number) => void;
+  setMuted: (muted: boolean) => void;
+  toggleMuted: () => void;
+  resetGame: () => void;
+}
 
 /**
  * Zustand store for game state management.
@@ -11,6 +37,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   highScore: 0,
   difficulty: "medium",
   gameStatus: "menu",
+  audioSettings: getDefaultAudioSettings(),
 
   setScore: (score: number) => {
     const { highScore } = get();
@@ -30,6 +57,56 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   setGameStatus: (gameStatus: GameStatus) => {
     set({ gameStatus });
+  },
+
+  setEffectsVolume: (volume: number) => {
+    const clampedVolume = Math.max(0, Math.min(1, volume));
+    const newSettings = {
+      ...get().audioSettings,
+      effectsVolume: clampedVolume,
+    };
+    set({ audioSettings: newSettings });
+    applyAudioSettings(newSettings);
+    persistAudioSettings(newSettings);
+  },
+
+  setMusicVolume: (volume: number) => {
+    const clampedVolume = Math.max(0, Math.min(1, volume));
+    const newSettings = {
+      ...get().audioSettings,
+      musicVolume: clampedVolume,
+    };
+    set({ audioSettings: newSettings });
+    applyAudioSettings(newSettings);
+    persistAudioSettings(newSettings);
+  },
+
+  setMuted: (muted: boolean) => {
+    const newSettings = {
+      ...get().audioSettings,
+      isMuted: muted,
+    };
+    set({ audioSettings: newSettings });
+    applyAudioSettings(newSettings);
+    persistAudioSettings(newSettings);
+  },
+
+  toggleMuted: () => {
+    const { audioSettings } = get();
+    const newSettings = {
+      ...audioSettings,
+      isMuted: !audioSettings.isMuted,
+    };
+    set({ audioSettings: newSettings });
+    applyAudioSettings(newSettings);
+    persistAudioSettings(newSettings);
+  },
+
+  resetGame: () => {
+    set({
+      score: 0,
+      gameStatus: "menu",
+    });
   },
 }));
 
@@ -81,9 +158,13 @@ export const saveScoreToStorage = (): boolean => {
 };
 
 /**
- * Initialize game state with high score from LocalStorage.
+ * Initialize game state with high score and audio settings from LocalStorage.
  * Called on app startup.
  */
 export const initializeGameStore = (): void => {
   loadHighScoreFromStorage();
+
+  // Load audio settings from localStorage
+  const savedAudioSettings = loadAudioSettings();
+  useGameStore.setState({ audioSettings: savedAudioSettings });
 };

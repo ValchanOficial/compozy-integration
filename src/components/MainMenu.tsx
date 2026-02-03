@@ -1,5 +1,7 @@
 import { useGameStore } from "@/stores/gameStore";
 import { Difficulty } from "@/types";
+import { AudioControls } from "./AudioControls";
+import { useResponsive } from "@/hooks/useResponsive";
 import "./MainMenu.css";
 
 /**
@@ -37,6 +39,7 @@ export function MainMenu({
 }: MainMenuProps): JSX.Element {
   const difficulty = useGameStore((state) => state.difficulty);
   const setDifficulty = useGameStore((state) => state.setDifficulty);
+  const { isMobile, isTablet } = useResponsive();
 
   /**
    * Handle difficulty selection.
@@ -90,13 +93,21 @@ export function MainMenu({
       )}
 
       <div className="controls-info">
-        <p>
+        <p className="controls-info--keyboard">
           <strong>Controls:</strong> Arrow keys or WASD to move
+        </p>
+        <p className="controls-info--touch">
+          <strong>Controls:</strong> Swipe to move
         </p>
         <p>
           <strong>Pause:</strong> ESC or P
         </p>
       </div>
+
+      <AudioControls
+        compact={isMobile || isTablet}
+        className="main-menu-audio-controls"
+      />
     </div>
   );
 }

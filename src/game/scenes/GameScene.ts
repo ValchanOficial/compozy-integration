@@ -8,6 +8,13 @@ import {
   resetGameState,
   incrementScore,
 } from "@/stores/gameStore";
+import {
+  playSoundEffect,
+  initializeAudio,
+  startBackgroundMusic,
+  stopBackgroundMusic,
+} from "@/services/audioService";
+import { SwipeDirection } from "@/types";
 
 /**
  * Main gameplay scene handling snake movement, food collection, and collisions.
@@ -28,6 +35,7 @@ export class GameScene extends Phaser.Scene {
   private snakeGraphics!: Phaser.GameObjects.Graphics;
   private foodGraphics!: Phaser.GameObjects.Graphics;
   private isPaused: boolean = false;
+  private lastScore: number = 0;
 
   constructor() {
     super({ key: "GameScene" });
@@ -41,6 +49,7 @@ export class GameScene extends Phaser.Scene {
     this.moveInterval = DIFFICULTY_SPEED[difficulty] || DIFFICULTY_SPEED.medium;
     this.moveTimer = 0;
     this.isPaused = false;
+    this.lastScore = 0;
   }
 
   /**
@@ -49,6 +58,12 @@ export class GameScene extends Phaser.Scene {
   create(): void {
     // Reset game state
     resetGameState();
+
+    // Initialize audio (if not already initialized)
+    initializeAudio();
+
+    // Start background music
+    startBackgroundMusic();
 
     // Create entities
     this.snake = new Snake();
@@ -142,6 +157,25 @@ export class GameScene extends Phaser.Scene {
   }
 
   /**
+   * Set snake direction from touch swipe gesture.
+   * Used by GameCanvas component for mobile controls.
+   * @param direction - The swipe direction
+   */
+  setDirectionFromTouch(direction: SwipeDirection): void {
+    if (!direction || this.isPaused) return;
+
+    // Map SwipeDirection to game Direction (they're the same type values)
+    const directionMap: Record<Exclude<SwipeDirection, null>, Direction> = {
+      up: "up",
+      down: "down",
+      left: "left",
+      right: "right",
+    };
+
+    this.snake.setDirection(directionMap[direction]);
+  }
+
+  /**
    * Move the snake and check for collisions.
    */
   private moveSnake(): void {
@@ -193,6 +227,19 @@ export class GameScene extends Phaser.Scene {
     // Update score
     incrementScore(10);
 
+    // Play eat sound effect
+    playSoundEffect("eat");
+
+    // Check for level up (every 50 points)
+    const currentScore = getGameState().score;
+    if (
+      Math.floor(currentScore / 50) > Math.floor(this.lastScore / 50) &&
+      currentScore > 0
+    ) {
+      playSoundEffect("levelup");
+    }
+    this.lastScore = currentScore;
+
     // Respawn food
     this.food.respawn(this.snake.getBody());
 
@@ -206,6 +253,12 @@ export class GameScene extends Phaser.Scene {
   private handleGameOver(): void {
     const state = getGameState();
     state.setGameStatus("gameover");
+
+    // Play collision sound
+    playSoundEffect("collision");
+
+    // Stop background music
+    stopBackgroundMusic();
 
     // Could transition to GameOverScene here
     // For now, just stop the game
@@ -302,5 +355,12 @@ export class GameScene extends Phaser.Scene {
    */
   setIsPaused(paused: boolean): void {
     this.isPaused = paused;
+  }
+
+  /**
+   * Cleanup when scene is destroyed.
+   */
+  shutdown(): void {
+    stopBackgroundMusic();
   }
 }

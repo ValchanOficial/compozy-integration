@@ -1,10 +1,11 @@
 import { useState, useCallback, useEffect } from "react";
 import "./App.css";
+import "@/styles/responsive.css";
 import { GameCanvas } from "@/components/GameCanvas";
 import { GameHUD } from "@/components/GameHUD";
 import { MainMenu } from "@/components/MainMenu";
 import { Leaderboard } from "@/components/Leaderboard";
-import { useGameStore } from "@/stores/gameStore";
+import { useGameStore, initializeGameStore } from "@/stores/gameStore";
 import { getUser } from "@/services/supabase";
 
 function App() {
@@ -16,6 +17,11 @@ function App() {
   const [currentUserId, setCurrentUserId] = useState<string | undefined>(
     undefined
   );
+
+  // Initialize game store (load high score and audio settings from localStorage)
+  useEffect(() => {
+    initializeGameStore();
+  }, []);
 
   // Fetch current user ID for highlighting in leaderboard
   useEffect(() => {

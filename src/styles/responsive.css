@@ -1,0 +1,397 @@
+/**
+ * Responsive Design System for Snake Game
+ *
+ * Breakpoints:
+ * - xs: < 600px (mobile)
+ * - sm: 600px - 799px (large mobile / small tablet)
+ * - md: 800px - 1199px (tablet)
+ * - lg: 1200px - 1919px (desktop)
+ * - xl: 1920px - 2559px (large desktop)
+ * - xxl: >= 2560px (4K displays)
+ */
+
+/* ====================
+   CSS Custom Properties for Responsive Spacing
+   ==================== */
+:root {
+  --game-padding: 40px;
+  --game-max-width: 800px;
+  --game-max-height: 600px;
+  --ui-spacing: 24px;
+  --button-padding: 16px 32px;
+  --title-size: 2rem;
+  --text-size: 1rem;
+}
+
+/* ====================
+   Game Container Responsive Styles
+   ==================== */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: calc(var(--game-max-width) + var(--game-padding) * 2);
+  padding: var(--game-padding);
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.game-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: var(--game-max-width);
+  aspect-ratio: 4 / 3;
+  background-color: #1a1a2e;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.game-canvas-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+/* ====================
+   Loading State
+   ==================== */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(26, 26, 46, 0.95);
+  z-index: 10;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #333;
+  border-top-color: #4ade80;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  margin-top: 16px;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ====================
+   Touch Controls Overlay
+   ==================== */
+.touch-controls-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.touch-hint {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  text-align: center;
+  pointer-events: none;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ====================
+   Mobile Breakpoint (< 600px)
+   ==================== */
+@media (max-width: 599px) {
+  :root {
+    --game-padding: 16px;
+    --ui-spacing: 16px;
+    --button-padding: 12px 24px;
+    --title-size: 1.5rem;
+    --text-size: 0.9rem;
+  }
+
+  .game-container {
+    padding: var(--game-padding);
+    min-height: 100dvh;
+    justify-content: flex-start;
+    padding-top: 20px;
+  }
+
+  .game-canvas-wrapper {
+    border-radius: 4px;
+  }
+
+  /* Stack UI elements vertically */
+  .game-ui-row {
+    flex-direction: column;
+    gap: var(--ui-spacing);
+  }
+
+  /* Adjust difficulty buttons for mobile */
+  .difficulty-selector {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .difficulty-button {
+    width: 100%;
+    padding: 12px 16px;
+  }
+
+  /* Make buttons larger for touch */
+  .start-button,
+  .leaderboard-button {
+    width: 100%;
+    max-width: 300px;
+    padding: var(--button-padding);
+    font-size: var(--text-size);
+  }
+
+  /* Adjust controls info */
+  .controls-info {
+    font-size: 0.8rem;
+  }
+
+  /* Show touch-specific controls info */
+  .controls-info--keyboard {
+    display: none;
+  }
+
+  .controls-info--touch {
+    display: block;
+  }
+}
+
+/* ====================
+   Small Tablet Breakpoint (600px - 799px)
+   ==================== */
+@media (min-width: 600px) and (max-width: 799px) {
+  :root {
+    --game-padding: 24px;
+    --ui-spacing: 20px;
+    --button-padding: 14px 28px;
+    --title-size: 1.75rem;
+    --text-size: 0.95rem;
+  }
+
+  .game-container {
+    padding: var(--game-padding);
+  }
+
+  .difficulty-selector {
+    max-width: 280px;
+  }
+}
+
+/* ====================
+   Tablet Breakpoint (800px - 1199px)
+   ==================== */
+@media (min-width: 800px) and (max-width: 1199px) {
+  :root {
+    --game-padding: 32px;
+    --ui-spacing: 24px;
+  }
+
+  .game-container {
+    padding: var(--game-padding);
+  }
+}
+
+/* ====================
+   Desktop Breakpoint (1200px - 1919px)
+   ==================== */
+@media (min-width: 1200px) {
+  .game-container {
+    padding: var(--game-padding);
+  }
+
+  /* Hide touch controls info on desktop */
+  .controls-info--touch {
+    display: none;
+  }
+
+  .controls-info--keyboard {
+    display: block;
+  }
+}
+
+/* ====================
+   Large Desktop Breakpoint (1920px - 2559px)
+   ==================== */
+@media (min-width: 1920px) {
+  :root {
+    --game-max-width: 1000px;
+    --game-max-height: 750px;
+    --game-padding: 48px;
+    --ui-spacing: 32px;
+    --title-size: 2.25rem;
+    --text-size: 1.1rem;
+  }
+}
+
+/* ====================
+   4K Breakpoint (>= 2560px)
+   ==================== */
+@media (min-width: 2560px) {
+  :root {
+    --game-max-width: 1200px;
+    --game-max-height: 900px;
+    --game-padding: 64px;
+    --ui-spacing: 40px;
+    --title-size: 2.5rem;
+    --text-size: 1.2rem;
+  }
+
+  .loading-spinner {
+    width: 64px;
+    height: 64px;
+    border-width: 5px;
+  }
+
+  .loading-text {
+    font-size: 1.1rem;
+    margin-top: 24px;
+  }
+}
+
+/* ====================
+   Portrait Orientation Adjustments
+   ==================== */
+@media (orientation: portrait) and (max-width: 799px) {
+  .game-canvas-wrapper {
+    /* Adjust for portrait mobile screens */
+    max-height: 50vh;
+  }
+
+  .game-container {
+    justify-content: flex-start;
+    gap: var(--ui-spacing);
+  }
+}
+
+/* ====================
+   Landscape Orientation on Mobile
+   ==================== */
+@media (orientation: landscape) and (max-height: 500px) {
+  :root {
+    --game-padding: 12px;
+    --ui-spacing: 12px;
+  }
+
+  .game-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--ui-spacing);
+    padding: var(--game-padding);
+  }
+
+  .game-canvas-wrapper {
+    height: calc(100vh - var(--game-padding) * 2);
+    width: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Compact sidebar for controls in landscape */
+  .game-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 200px;
+  }
+}
+
+/* ====================
+   High DPI / Retina Displays
+   ==================== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .game-canvas-wrapper {
+    /* Ensure crisp rendering on retina */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* ====================
+   Reduced Motion Preference
+   ==================== */
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner {
+    animation: none;
+  }
+
+  .touch-hint {
+    animation: none;
+    opacity: 1;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ====================
+   Utility Classes
+   ==================== */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mobile-only {
+  display: none;
+}
+
+.desktop-only {
+  display: block;
+}
+
+@media (max-width: 799px) {
+  .mobile-only {
+    display: block;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+}
