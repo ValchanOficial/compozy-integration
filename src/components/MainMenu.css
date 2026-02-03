@@ -78,6 +78,24 @@
   transform: scale(1.05);
 }
 
+.leaderboard-button {
+  padding: 12px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #333;
+  color: #ffffff;
+  border: 2px solid #4ade80;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 32px;
+}
+
+.leaderboard-button:hover {
+  background-color: #4ade80;
+  color: #1a1a2e;
+}
+
 .controls-info {
   text-align: center;
   color: #888;

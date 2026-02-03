@@ -8,6 +8,8 @@ import "./MainMenu.css";
 export interface MainMenuProps {
   /** Callback function when the user starts the game */
   onStartGame: () => void;
+  /** Optional callback function when the user views the leaderboard */
+  onViewLeaderboard?: () => void;
 }
 
 /**
@@ -29,7 +31,10 @@ const DIFFICULTY_OPTIONS: DifficultyOption[] = [
  * MainMenu component that displays difficulty selection and start game button.
  * Allows players to select a difficulty level before starting the game.
  */
-export function MainMenu({ onStartGame }: MainMenuProps): JSX.Element {
+export function MainMenu({
+  onStartGame,
+  onViewLeaderboard,
+}: MainMenuProps): JSX.Element {
   const difficulty = useGameStore((state) => state.difficulty);
   const setDifficulty = useGameStore((state) => state.setDifficulty);
 
@@ -73,6 +78,16 @@ export function MainMenu({ onStartGame }: MainMenuProps): JSX.Element {
       >
         Start Game
       </button>
+
+      {onViewLeaderboard && (
+        <button
+          className="leaderboard-button"
+          onClick={onViewLeaderboard}
+          data-testid="view-leaderboard-button"
+        >
+          View Leaderboard
+        </button>
+      )}
 
       <div className="controls-info">
         <p>
